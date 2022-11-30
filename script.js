@@ -12,6 +12,7 @@ const insertTodo = () => {
         return;
     }
     todoList.push({ name: todo.trim(), id: Date.now() });
+    localStorage.setItem('todoList', JSON.stringify(todoList));
 };
 
 const showTodo = () => {
@@ -28,7 +29,15 @@ const showTodo = () => {
 
 const deleteTodo = (id) => {
     todoList = todoList.filter((item) => item.id !== id);
+    localStorage.setItem('todoList', JSON.stringify(todoList));
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('todoList')) {
+        todoList = JSON.parse(localStorage.getItem('todoList'));
+    }
+    showTodo();
+});
 
 document.addEventListener('click', (e) => {
     if (e.target.matches('button.btn-primary')) {
